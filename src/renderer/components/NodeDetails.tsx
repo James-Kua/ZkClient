@@ -1,4 +1,5 @@
-import { FiEdit2, FiTrash2, FiRefreshCw, FiClock, FiHash, FiLayers } from 'react-icons/fi';
+import { useState, useMemo } from 'react';
+import { FiEdit2, FiTrash2, FiRefreshCw, FiClock, FiHash, FiLayers, FiCopy, FiCheck } from 'react-icons/fi';
 import { ZkNode } from '../types';
 
 interface Props {
@@ -9,11 +10,41 @@ interface Props {
 }
 
 function NodeDetails({ node, onEdit, onDelete, onRefresh }: Props) {
+  const [copied, setCopied] = useState(false);
+
   const formatDate = (dateStr: string) => {
     try {
       return new Date(dateStr).toLocaleString();
     } catch {
       return dateStr;
+    }
+  };
+
+  const isJson = useMemo(() => {
+    if (!node.data.trim()) return false;
+    try {
+      JSON.parse(node.data);
+      return true;
+    } catch {
+      return false;
+    }
+  }, [node.data]);
+
+  const displayData = useMemo(() => {
+    if (!node.data.trim()) return '';
+    if (isJson) {
+      return JSON.stringify(JSON.parse(node.data), null, 2);
+    }
+    return node.data;
+  }, [node.data, isJson]);
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(displayData);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy:', err);
     }
   };
 
@@ -41,12 +72,21 @@ function NodeDetails({ node, onEdit, onDelete, onRefresh }: Props) {
       <div className="details-path">
         <code>{node.path}</code>
         {isEphemeral && <span className="badge badge-warning">Ephemeral</span>}
+        {isJson && <span className="badge badge-info">JSON</span>}
       </div>
 
       <div className="details-section">
-        <h3>Data</h3>
+        <div className="data-header">
+          <h3>Data</h3>
+          {node.data && (
+            <button className="btn btn-secondary btn-sm" onClick={handleCopy}>
+              {copied ? <FiCheck /> : <FiCopy />}
+              {copied ? 'Copied!' : 'Copy'}
+            </button>
+          )}
+        </div>
         <pre className="data-preview">
-          {node.data || <em className="text-muted">(empty)</em>}
+          {displayData || <em className="text-muted">(empty)</em>}
         </pre>
       </div>
 
