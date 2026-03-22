@@ -27,9 +27,26 @@ export interface ApiResult<T = void> {
   path?: string;
 }
 
+export interface SshTunnelConfig {
+  enabled: boolean;
+  host: string;
+  port: number;
+  username: string;
+  password?: string;
+  privateKey?: string;
+  passphrase?: string;
+  remoteHost: string;
+  remotePort: number;
+}
+
+export interface ConnectionConfig {
+  connectionString: string;
+  sshTunnel?: SshTunnelConfig;
+}
+
 const api = {
-  connect: (connectionString: string): Promise<ApiResult> =>
-    ipcRenderer.invoke('zk:connect', connectionString),
+  connect: (config: ConnectionConfig): Promise<ApiResult> =>
+    ipcRenderer.invoke('zk:connect', config),
   disconnect: (): Promise<ApiResult> =>
     ipcRenderer.invoke('zk:disconnect'),
   getChildren: (nodePath: string): Promise<ApiResult<string[]>> =>

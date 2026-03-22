@@ -20,12 +20,22 @@ export interface ZkNode {
   children?: string[];
 }
 
+export interface ZkConnectionOptions {
+  connectionString: string;
+  localAddress?: string;
+  localPort?: number;
+}
+
 export class ZkService {
   private client: zk.Client | null = null;
   private connectionString: string;
 
-  constructor(connectionString: string) {
-    this.connectionString = connectionString;
+  constructor(options: ZkConnectionOptions) {
+    if (options.localPort && options.localAddress) {
+      this.connectionString = `${options.localAddress}:${options.localPort}`;
+    } else {
+      this.connectionString = options.connectionString;
+    }
   }
 
   async connect(): Promise<void> {

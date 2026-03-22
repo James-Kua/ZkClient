@@ -33,10 +33,27 @@ export interface ApiResult<T = void> {
   path?: string;
 }
 
+export interface SshTunnelConfig {
+  enabled: boolean;
+  host: string;
+  port: number;
+  username: string;
+  password?: string;
+  privateKey?: string;
+  passphrase?: string;
+  remoteHost: string;
+  remotePort: number;
+}
+
+export interface ConnectionConfig {
+  connectionString: string;
+  sshTunnel?: SshTunnelConfig;
+}
+
 declare global {
   interface Window {
     zkApi: {
-      connect: (connectionString: string) => Promise<ApiResult>;
+      connect: (config: ConnectionConfig) => Promise<ApiResult>;
       disconnect: () => Promise<ApiResult>;
       getChildren: (nodePath: string) => Promise<ApiResult<string[]>>;
       getNode: (nodePath: string) => Promise<ApiResult<ZkNode>>;
