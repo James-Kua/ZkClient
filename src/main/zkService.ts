@@ -91,14 +91,25 @@ export class ZkService {
           reject(new Error(String(error)));
         } else {
           const statObj = stat as zk.Stat;
+          const parseTime = (val: Buffer | number): string => {
+            try {
+              if (Buffer.isBuffer(val)) {
+                const num = Number(val.readBigUInt64BE());
+                return new Date(num).toISOString();
+              }
+              return new Date(Number(val)).toISOString();
+            } catch {
+              return new Date().toISOString();
+            }
+          };
           resolve({
             path: nodePath,
             data: data ? data.toString('utf-8') : '',
             stat: {
               czxid: statObj.czxid.toString(),
               mzxid: statObj.mzxid.toString(),
-              ctime: new Date(Number(statObj.ctime.readBigUInt64BE()) / 1000000).toISOString(),
-              mtime: new Date(Number(statObj.mtime.readBigUInt64BE()) / 1000000).toISOString(),
+              ctime: parseTime(statObj.ctime),
+              mtime: parseTime(statObj.mtime),
               version: statObj.version,
               cversion: statObj.cversion,
               aversion: statObj.aversion,
