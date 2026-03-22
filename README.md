@@ -2,6 +2,11 @@
 
 A desktop application for managing and visualizing Apache ZooKeeper nodes, built with Electron and TypeScript.
 
+## Screenshots
+
+![ZkClient](screenshots/app.png)
+*Browse and manage ZooKeeper nodes with an intuitive tree view*
+
 ## Features
 
 - Connect to local ZooKeeper servers
@@ -26,19 +31,23 @@ npm run dev
 npm run build
 ```
 
-## Build for Mac
+## Build for macOS
 
 ```bash
-# Install electron-builder (first time only)
-npm install --save-dev electron-builder
-
-# Build Mac app
+# Build .app (unpacked)
 npm run build && npx electron-builder --mac
 ```
 
-The `.app` will be output to `dist/mac-arm64/ZkClient.app`.
+The `.app` will be output to `dist/mac-arm64/`.
 
-To run: `open dist/mac-arm64/ZkClient.app`
+## Build DMG for macOS
+
+```bash
+# Build .dmg (installer)
+npm run build && npx electron-builder --mac dmg
+```
+
+The `.dmg` will be output to `dist/`.
 
 ## Build for Windows
 
