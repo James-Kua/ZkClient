@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FiX, FiCheck } from 'react-icons/fi';
 
 interface Props {
@@ -16,6 +16,19 @@ function NodeEditor({ mode, nodePath, nodeData, onClose, onSaved }: Props) {
   const [isSequential, setIsSequential] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (mode === 'create') {
+      setPath('/');
+      setData('');
+      setIsEphemeral(false);
+      setIsSequential(false);
+    } else {
+      setPath(nodePath);
+      setData(nodeData);
+    }
+    setError(null);
+  }, [mode, nodePath, nodeData]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

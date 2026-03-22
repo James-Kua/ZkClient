@@ -2,6 +2,7 @@
   "name": "zkclient",
   "version": "1.0.0",
   "description": "ZooKeeper Client with interactive node visualization",
+  "author": "ZkClient",
   "main": "dist/main/main/index.js",
   "scripts": {
     "dev": "concurrently \"npm run dev:renderer\" \"npm run dev:main\"",
@@ -30,5 +31,16 @@
     "electron-builder": "^26.8.1",
     "typescript": "^5.3.3",
     "vite": "^5.0.12"
+  },
+  "build": {
+    "appId": "com.zkclient.app",
+    "productName": "ZkClient",
+    "files": [
+      "dist/**/*",
+      "package.json"
+    ],
+    "mac": {
+      "target": "dir"
+    }
   }
 }

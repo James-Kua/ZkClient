@@ -5,10 +5,12 @@ A desktop application for managing and visualizing Apache ZooKeeper nodes, built
 ## Features
 
 - Connect to local ZooKeeper servers
-- Interactive tree view of ZK nodes
+- Interactive tree view of ZK nodes with lazy loading
 - View node details (data, statistics, timestamps)
 - Create, edit, and delete nodes
 - Support for ephemeral and sequential nodes
+- JSON data detection and prettification
+- Copy data to clipboard
 - Dark themed modern UI
 
 ## Development
@@ -34,7 +36,9 @@ npm install --save-dev electron-builder
 npm run build && npx electron-builder --mac
 ```
 
-The `.app` will be output to `dist/mac/`.
+The `.app` will be output to `dist/mac-arm64/ZkClient.app`.
+
+To run: `open dist/mac-arm64/ZkClient.app`
 
 ## Build for Windows
 
