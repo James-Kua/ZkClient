@@ -60,8 +60,8 @@ function NodeEditor({ mode, nodePath, nodeData, onClose, onSaved }: Props) {
   };
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal" onClick={(e) => e.stopPropagation()}>
+    <div className="ssh-modal-overlay" onClick={onClose}>
+      <div className="ssh-modal" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <h2>{mode === 'create' ? 'Create Node' : 'Edit Node'}</h2>
           <button className="btn-icon" onClick={onClose}>
@@ -100,23 +100,21 @@ function NodeEditor({ mode, nodePath, nodeData, onClose, onSaved }: Props) {
           </div>
 
           {mode === 'create' && (
-            <div className="form-row">
-              <label className="checkbox-label">
-                <input
-                  type="checkbox"
-                  checked={isEphemeral}
-                  onChange={(e) => setIsEphemeral(e.target.checked)}
-                />
+            <div className="tile-options">
+              <button
+                type="button"
+                className={`tile-option ${isEphemeral ? 'active' : ''}`}
+                onClick={() => setIsEphemeral(!isEphemeral)}
+              >
                 Ephemeral Node
-              </label>
-              <label className="checkbox-label">
-                <input
-                  type="checkbox"
-                  checked={isSequential}
-                  onChange={(e) => setIsSequential(e.target.checked)}
-                />
+              </button>
+              <button
+                type="button"
+                className={`tile-option ${isSequential ? 'active' : ''}`}
+                onClick={() => setIsSequential(!isSequential)}
+              >
                 Sequential
-              </label>
+              </button>
             </div>
           )}
 

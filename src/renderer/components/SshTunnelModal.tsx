@@ -40,8 +40,8 @@ function SshTunnelModal({ isOpen, onClose, config, onSave }: Props) {
   if (!isOpen) return null;
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal" onClick={(e) => e.stopPropagation()}>
+    <div className="ssh-modal-overlay" onClick={onClose}>
+      <div className="ssh-modal" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <h2>SSH Tunnel Settings</h2>
           <button className="btn-icon" onClick={onClose}>
