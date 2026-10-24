@@ -1,5 +1,6 @@
 node_modules
-dist
+build/bin
+frontend/dist
 .DS_Store
 
 .env
@@ -7,3 +8,4 @@ dist
 .env.development.local
 .env.test.local
 .env.production.local
+frontend/package.json.md5

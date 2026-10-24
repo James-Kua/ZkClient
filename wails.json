@@ -1,0 +1,18 @@
+{
+  "$schema": "https://wails.io/schemas/config.v2.json",
+  "name": "ZkClient",
+  "outputfilename": "ZkClient",
+  "frontend:install": "npm install",
+  "frontend:build": "npm run build",
+  "frontend:dev:watcher": "npm run dev",
+  "frontend:dev:serverUrl": "auto",
+  "author": {
+    "name": "James Kua",
+    "email": "kua.james30@gmail.com"
+  },
+  "info": {
+    "productName": "ZkClient",
+    "productVersion": "2.0.0",
+    "comments": "ZooKeeper client with interactive node browsing"
+  }
+}
